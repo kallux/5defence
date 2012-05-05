@@ -11,7 +11,7 @@ var canvas,
 function init() {
     var i;
     canvas = document.getElementById("gameCanvas");
-    canvas.addEventListener('click', click, false);
+    canvas.onclick = click;
     stage = new Stage(canvas);
 
     // add a text object to output the current FPS:
@@ -25,7 +25,7 @@ function init() {
     Ticker.addListener(window);
 
     for (var i=3; i >= 0; i--) {
-      wall = new Wall(Math.random() * canvas.width, Math.random() * canvas.height, 100, 100);
+      wall = new Wall(parseInt(Math.random() * canvas.width), parseInt(Math.random() * canvas.height), 100, 100);
       wall.render();
       walls.push(wall);
     }
@@ -97,8 +97,9 @@ function Character(x, y, graphics) {
     self.entity.x = x;
     self.entity.y = y;
     self.entity.rotation = Math.random() * 360;
+//    var a = Math.PI * 2 * Math.random();
     var a = self.entity.rotation / 360.0 * Math.PI * 2;
-    self.entity.v = Math.random() * self.speed;
+    self.entity.v = Math.random()* self.speed;
     self.entity.vX = Math.cos(a) * self.entity.v;
     self.entity.vY = Math.sin(a) * self.entity.v;
     self.entity.regX = Math.round(self.entity.width / 2.0);
@@ -111,15 +112,23 @@ function Character(x, y, graphics) {
         self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
 
         if(self.moveToPoint !== null) {
-            self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
-
+            self.entity.rotation = 360 - Math.atan2(- self.entity.x + self.moveToPoint.x, - self.entity.y + self.moveToPoint.y) * 180;
             self.label.text += ' ' + Math.round(self.entity.rotation);
+        }
+
+        for(var i = 0; walls.length > i; i++)
+        {
+          if(walls[i].collision(self.entity.x, self.entity.y))
+          {
+            self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
+            break;
+          }
         }
 
         self.entity.x += self.entity.vX;
         self.entity.y += self.entity.vY;
 
-        self.label.x = self.entity.x + 10;
+        self.label.x = self.entity.x+10;
         self.label.y = self.entity.y;
 
         if(self.entity.x > canvas.width) {
@@ -138,6 +147,8 @@ function Character(x, y, graphics) {
             self.entity.y = 0;
             self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
         }
+
+
 
         var a = self.entity.rotation / 360.0 * Math.PI * 2;
         self.entity.vX = Math.cos(a) * self.entity.v;
