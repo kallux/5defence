@@ -3,7 +3,8 @@ window.onload = init;
 var canvas,
     stage,
     fpsLabel,
-    characters = [],
+    enemies = [],
+    towers = [],
     run = true;
 
 function init() {
@@ -30,7 +31,7 @@ function init() {
     shape.y = parseInt(canvas.height/2-50);;
     stage.addChild(shape);
 
-    addCharacters();
+    addEnemies();
     initHud();
 }
 
@@ -43,22 +44,31 @@ function tick() {
         return;
     }
     var i,
-        charLen = characters.length;
+        enemiesLen = enemies.length,
+        towersLen = towers.length;
     fpsLabel.text = Math.round(Ticker.getMeasuredFPS()) + " fps";
-    
-    for (var i=charLen - 1; i >= 0; i--) {
-        characters[i].update();
+
+    for(var i = enemiesLen - 1; i >= 0; i--) {
+        enemies[i].update();
+    }
+
+    for(var i = towersLen - 1; i >= 0; i--) {
+        towers[i].update();
     }
 
     // draw the updates to stage
     stage.update();
 }
 
-function addCharacters() {
-    var c;
+function addEnemies() {
+    var e,
+        sensorRange = 50,
+        attackRange = 3,
+        attackStrength = 5,
+        life = 20;
     for(i = 0; i < 100; i += 1) {
-        c = new Character(Math.random() * canvas.width, Math.random() * canvas.height);
-        characters.push(c);
+        c = new Enemy(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
+        enemies.push(c);
     }
 }
 
@@ -68,7 +78,6 @@ function Character(x, y) {
     self.rotateAmount = 15;
     self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
     self.moveToPoint = null;
-    self.attackRange = 20;
     
     var g = new Graphics();
     g.beginFill("#0f0");
@@ -129,13 +138,20 @@ function Character(x, y) {
         self.entity.vY = Math.sin(a) * self.entity.v;
     };
 
+    self.distanceTo = function (character) {
+        var dx = character.x - self.character.x,
+            dy = character.y - self.character.y;
+        return Math.sqrt((dx * dx) + (dy * dy));
+    }
+
     return self;
 }
 
 function click() {
     var p = new Point(stage.mouseX, stage.mouseY);
-    for(i = 0; i < characters.length; i += 1) {
-        characters[i].moveToPoint = p;
+    for(i = 0; i < towers.length; i += 1) {
+        if(towers[i].selected) {
+            towers[i].moveToPoint = p;
+        }
     }
-
 }
