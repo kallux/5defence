@@ -32,6 +32,7 @@ function init() {
     stage.addChild(shape);
 
     addEnemies();
+    addTowers();
     initHud();
 }
 
@@ -67,25 +68,31 @@ function addEnemies() {
         attackStrength = 5,
         life = 20;
     for(i = 0; i < 100; i += 1) {
-        c = new Enemy(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
-        enemies.push(c);
+        e = new Enemy(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
+        enemies.push(e);
     }
 }
 
-function Character(x, y) {
+function addTowers() {
+    var t,
+        sensorRange = 50,
+        attackRange = 25,
+        attackStrength = 10,
+        life = 100;
+    for(i = 0; i < 10; i += 1) {
+        t = new Tower(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
+        towers.push(t);
+    }
+}
+
+function Character(x, y, graphics) {
     var self = this;
     self.speed = 1;
     self.rotateAmount = 15;
     self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
     self.moveToPoint = null;
     
-    var g = new Graphics();
-    g.beginFill("#0f0");
-    g.rect(-4,-4,10,10);
-    g.beginFill("#00f");
-    g.drawCircle(5,1,3);
-    var shape = new Shape(g);
-    self.entity = new Shape(g);
+    self.entity = new Shape(graphics);
     self.label = new Text(Math.round(self.entity.x)+" "+Math.round(self.entity.y), "8px Arial", "#CCC");
 
     self.entity.x = x;
@@ -139,8 +146,8 @@ function Character(x, y) {
     };
 
     self.distanceTo = function (character) {
-        var dx = character.x - self.character.x,
-            dy = character.y - self.character.y;
+        var dx = character.entity.x - self.entity.x,
+            dy = character.entity.y - self.entity.y;
         return Math.sqrt((dx * dx) + (dy * dy));
     }
 

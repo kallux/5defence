@@ -1,5 +1,5 @@
 
-function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
+function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
     var self = this;
     self.sensorRange = sensorRange;
     self.attackRange = attackRange;
@@ -7,7 +7,7 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     self.life = life;
 
     var g = new Graphics();
-    g.beginFill("#f00");
+    g.beginFill("#0f0");
     g.rect(-4, -4, 10, 10);
     g.beginFill("#00f");
     g.drawCircle(5, 1, 3);
@@ -16,9 +16,8 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     self.update = function () {
         var i = 0;
         for(i = 0; i < towers.length; i += 1) {
-            var d = self.character.distanceTo(towers[i].character);
-            if(d <= self.sensorRange) {
-                self.character.moveToPoint = new Point(towers[i].character.entity.x, towers[i].character.entity.y);
+            if(self.character.distanceTo(enemies[i].character) <= sensorRange) {
+                self.moveToPoint = new Point(enemies[i].character.x, enemies[i].character.y);
                 break;
             }
         }
