@@ -79,7 +79,7 @@ function addEnemies(count) {
     var e,
         sensorRange = 100,
         attackRange = 3,
-        attackStrength = 2,
+        attackStrength = 3,
         life = 200;
     count = count || 100;
     for(i = 0; i < count; i += 1) {
@@ -108,6 +108,7 @@ function Character(speed, x, y, graphics, life) {
     self.rotateAmount = 15;
     self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
     self.moveToPoint = null;
+    self.baseLife = life;
     self.life = life;
     self.isDead = false;
 
@@ -128,12 +129,10 @@ function Character(speed, x, y, graphics, life) {
     stage.addChild(self.label);
 
     self.update = function () {
-        self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
+        self.label.text = Math.round(self.life / self.baseLife * 100) + '%';
 
         if(self.moveToPoint !== null) {
             self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
-
-            self.label.text += ' ' + Math.round(self.entity.rotation);
         }
 
         for(var i = 0; walls.length > i; i++)
