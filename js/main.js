@@ -30,6 +30,7 @@ function init() {
     stage.addChild(shape);
 
     addCharacters();
+    initHud();
 }
 
 function toggleRun() {
