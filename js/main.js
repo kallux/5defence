@@ -62,11 +62,23 @@ function Character(x, y) {
     var self = this;
     self.speed = 1;
     self.rotateAmount = 30;
-    self.entity = new Text("character: ", "8px Arial", "#CCC");
+
+    var g = new Graphics();
+    g.beginFill("#0f0");
+    g.rect(0,0,10,10);
+    g.beginFill("#00f");
+    g.drawCircle(10,5,3);
+    var shape = new Shape(g);
+    self.entity = new Shape(g);
+    self.entity.text = new Text(Math.round(self.entity.x)+" "+Math.round(self.entity.y), "8px Arial", "#CCC");
+
     self.update = function () {
-        self.entity.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
+        self.entity.text.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
         self.entity.x += self.entity.vX;
         self.entity.y += self.entity.vY;
+
+        self.entity.text.x = self.entity.x+10;
+        self.entity.text.y = self.entity.y;
 
         if(self.entity.x > canvas.width) {
             self.entity.rotation += Math.random() * self.rotateAmount;
@@ -100,5 +112,6 @@ function Character(x, y) {
     self.entity.regY = Math.round(self.entity.height / 2.0);
 
     stage.addChild(self.entity);
+    stage.addChild(self.entity.text);
     return self;
 }
