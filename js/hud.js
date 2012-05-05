@@ -7,6 +7,19 @@ function setMoney(amount) {
     money = amount;
     moneyLabel.text = "$" + amount;
 }
+function addMoney(amount) {
+    money += amount;
+    setMoney(money);
+}
+function removeMoney(amount) {
+    if(money - amount > 0) {
+        money -= amount;
+        setMoney(money);
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function initHud() {
     buttons = [];
@@ -28,12 +41,13 @@ function initHud() {
     stage.addChild(moneyLabel);
     stage.addChild(buildMarineButton);
 
-    canvas.addEventListener('click', function(event) {
-        if (intersects(event.x, event.y, buildMarineButtonRect)) {
-            setMoney(money-10);
-            addMarine();
+    canvas.addEventListener('click', function (event) {
+        if(intersects(stage.mouseX, stage.mouseY, buildMarineButtonRect)) {
+            if(removeMoney(10)) {
+                addTowers(1);
+            }
         }
-    });
+    }, false);
 }
 
 function intersects(x, y, r) {

@@ -50,47 +50,67 @@ function tick() {
 
     for(var i = enemiesLen - 1; i >= 0; i--) {
         enemies[i].update();
+        if(enemies[i].character.isDead) {
+            stage.removeChild(enemies[i].character.entity);
+            stage.removeChild(enemies[i].character.label);
+            enemies.splice(i, 1);
+            addMoney(1);
+        }
+    }
+
+    if(enemiesLen <= 10) {
+        addEnemies(100);
     }
 
     for(var i = towersLen - 1; i >= 0; i--) {
         towers[i].update();
+        if(towers[i].character.isDead) {
+            stage.removeChild(towers[i].character.entity);
+            stage.removeChild(towers[i].character.label);
+            towers.splice(i, 1);
+        }
     }
 
     // draw the updates to stage
     stage.update();
 }
 
-function addEnemies() {
+function addEnemies(count) {
     var e,
-        sensorRange = 50,
+        sensorRange = 100,
         attackRange = 3,
-        attackStrength = 5,
-        life = 20;
-    for(i = 0; i < 100; i += 1) {
+        attackStrength = 2,
+        life = 200;
+    count = count || 100;
+    for(i = 0; i < count; i += 1) {
         e = new Enemy(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
         enemies.push(e);
     }
 }
 
-function addTowers() {
+function addTowers(count) {
     var t,
-        sensorRange = 50,
-        attackRange = 25,
-        attackStrength = 10,
-        life = 100;
-    for(i = 0; i < 10; i += 1) {
+        sensorRange = 100,
+        attackRange = 70,
+        attackStrength = 8,
+        life = 1000;
+    count = count || 10;
+    for(i = 0; i < count; i += 1) {
         t = new Tower(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
         towers.push(t);
     }
 }
 
-function Character(x, y, graphics) {
+function Character(speed, x, y, graphics, life) {
     var self = this;
-    self.speed = 1;
+    self.baseSpeed = Math.random() * speed;
+    self.speed = self.baseSpeed;
     self.rotateAmount = 15;
     self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
     self.moveToPoint = null;
-    
+    self.life = life;
+    self.isDead = false;
+
     self.entity = new Shape(graphics);
     self.label = new Text(Math.round(self.entity.x)+" "+Math.round(self.entity.y), "8px Arial", "#CCC");
 
@@ -99,9 +119,8 @@ function Character(x, y, graphics) {
     self.entity.rotation = Math.random() * 360;
 //    var a = Math.PI * 2 * Math.random();
     var a = self.entity.rotation / 360.0 * Math.PI * 2;
-    self.entity.v = Math.random()* self.speed;
-    self.entity.vX = Math.cos(a) * self.entity.v;
-    self.entity.vY = Math.sin(a) * self.entity.v;
+    self.entity.vX = Math.cos(a) * self.speed;
+    self.entity.vY = Math.sin(a) * self.speed;
     self.entity.regX = Math.round(self.entity.width / 2.0);
     self.entity.regY = Math.round(self.entity.height / 2.0);
 
@@ -112,7 +131,8 @@ function Character(x, y, graphics) {
         self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
 
         if(self.moveToPoint !== null) {
-            self.entity.rotation = 360 - Math.atan2(- self.entity.x + self.moveToPoint.x, - self.entity.y + self.moveToPoint.y) * 180;
+            self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
+
             self.label.text += ' ' + Math.round(self.entity.rotation);
         }
 
@@ -151,8 +171,8 @@ function Character(x, y, graphics) {
 
 
         var a = self.entity.rotation / 360.0 * Math.PI * 2;
-        self.entity.vX = Math.cos(a) * self.entity.v;
-        self.entity.vY = Math.sin(a) * self.entity.v;
+        self.entity.vX = Math.cos(a) * self.speed;
+        self.entity.vY = Math.sin(a) * self.speed;
     };
 
     self.distanceTo = function (character) {
