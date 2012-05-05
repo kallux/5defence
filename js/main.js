@@ -46,7 +46,7 @@ function tick() {
 }
 
 function addCharacters() {
-    for(i = 0; i < 10; i += 1) {
+    for(i = 0; i < 100; i += 1) {
         characters.push(new Character(Math.random() * canvas.width, Math.random() * canvas.height));
     }
 }
@@ -59,6 +59,23 @@ function Character(x, y) {
         self.entity.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
         self.entity.x += self.entity.vX;
         self.entity.y += self.entity.vY;
+
+        if(self.entity.x > canvas.width) {
+            self.entity.vX = -self.entity.vX;
+        }
+        if(self.entity.x < 0) {
+            self.entity.x = 0;
+            self.entity.vX = -self.entity.vX;
+        }
+        if(self.entity.y > canvas.height) {
+            self.entity.vY = -self.entity.vY;
+        }
+        if(self.entity.y < 0) {
+            self.entity.vY = -self.entity.vY;
+            self.entity.y = 0;
+        }
+        self.entity.regX = Math.round(self.entity.width / 2.0);
+        self.entity.regY = Math.round(self.entity.height / 2.0);
     };
 
     self.entity.x = x;
