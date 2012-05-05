@@ -9,7 +9,7 @@ var canvas,
 function init() {
     var i;
     canvas = document.getElementById("gameCanvas");
-    canvas.onclick = click;
+    canvas.addEventListener('click', click, false);
     stage = new Stage(canvas);
 
     // add a text object to output the current FPS:
