@@ -9,6 +9,7 @@ var canvas,
 function init() {
     var i;
     canvas = document.getElementById("gameCanvas");
+    canvas.onclick = click;
     stage = new Stage(canvas);
 
     // add a text object to output the current FPS:
@@ -45,7 +46,7 @@ function tick() {
         charLen = characters.length;
     fpsLabel.text = Math.round(Ticker.getMeasuredFPS()) + " fps";
     
-    for (var i=charLen - 1; i >=     0; i--) {
+    for (var i=charLen - 1; i >= 0; i--) {
         characters[i].update();
     }
 
@@ -54,17 +55,21 @@ function tick() {
 }
 
 function addCharacters() {
+    var c;
     for(i = 0; i < 100; i += 1) {
-        var char = new Character(Math.random() * canvas.width, Math.random() * canvas.height);
-        characters.push(char);
+        c = new Character(Math.random() * canvas.width, Math.random() * canvas.height);
+        characters.push(c);
     }
 }
 
 function Character(x, y) {
     var self = this;
     self.speed = 1;
-    self.rotateAmount = 30;
-
+    self.rotateAmount = 15;
+    self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
+    self.moveToPoint = null;
+    self.attackRange = 20;
+    
     var g = new Graphics();
     g.beginFill("#0f0");
     g.rect(-4,-4,10,10);
@@ -73,34 +78,6 @@ function Character(x, y) {
     var shape = new Shape(g);
     self.entity = new Shape(g);
     self.label = new Text(Math.round(self.entity.x)+" "+Math.round(self.entity.y), "8px Arial", "#CCC");
-
-    self.update = function () {
-        self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
-        self.entity.x += self.entity.vX;
-        self.entity.y += self.entity.vY;
-
-        self.label.x = self.entity.x+10;
-        self.label.y = self.entity.y;
-
-        if(self.entity.x > canvas.width) {
-            self.entity.rotation += Math.random() * self.rotateAmount;
-        }
-        if(self.entity.x < 0) {
-            self.entity.x = 0;
-            self.entity.rotation += Math.random() * self.rotateAmount;
-        }
-        if(self.entity.y > canvas.height) {
-            self.entity.rotation += Math.random() * self.rotateAmount;
-        }
-        if(self.entity.y < 0) {
-            self.entity.y = 0;
-            self.entity.rotation += Math.random() * self.rotateAmount;
-        }
-
-        var a = self.entity.rotation / 360.0 * Math.PI * 2;
-        self.entity.vX = Math.cos(a) * self.entity.v;
-        self.entity.vY = Math.sin(a) * self.entity.v;
-    };
 
     self.entity.x = x;
     self.entity.y = y;
@@ -115,6 +92,50 @@ function Character(x, y) {
 
     stage.addChild(self.entity);
     stage.addChild(self.label);
+
+    self.update = function () {
+        self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
+
+        if(self.moveToPoint !== null) {
+            self.entity.rotation = 360 - Math.atan2(- self.entity.x + self.moveToPoint.x, - self.entity.y + self.moveToPoint.y) * 180;
+            self.label.text += ' ' + Math.round(self.entity.rotation);
+        }
+
+        self.entity.x += self.entity.vX;
+        self.entity.y += self.entity.vY;
+
+        self.label.x = self.entity.x+10;
+        self.label.y = self.entity.y;
+
+        if(self.entity.x > canvas.width) {
+            self.entity.x = canvas.width;
+            self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
+        }
+        if(self.entity.x < 0) {
+            self.entity.x = 0;
+            self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
+        }
+        if(self.entity.y > canvas.height) {
+            self.entity.y = canvas.height;
+            self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
+        }
+        if(self.entity.y < 0) {
+            self.entity.y = 0;
+            self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
+        }
+
+        var a = self.entity.rotation / 360.0 * Math.PI * 2;
+        self.entity.vX = Math.cos(a) * self.entity.v;
+        self.entity.vY = Math.sin(a) * self.entity.v;
+    };
+
     return self;
 }
 
+function click() {
+    var p = new Point(stage.mouseX, stage.mouseY);
+    for(i = 0; i < characters.length; i += 1) {
+        characters[i].moveToPoint = p;
+    }
+
+}
