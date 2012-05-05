@@ -3,6 +3,7 @@ window.onload = init;
 var canvas,
     stage,
     fpsLabel,
+    walls = [],
     enemies = [],
     towers = [],
     run = true;
@@ -23,13 +24,11 @@ function init() {
     Ticker.setFPS(60);
     Ticker.addListener(window);
 
-    var g = new Graphics();
-    g.beginFill("#f00");
-    g.rect(0,0,100,100);
-    var shape = new Shape(g);
-    shape.x = parseInt(canvas.width/2-50);
-    shape.y = parseInt(canvas.height/2-50);;
-    stage.addChild(shape);
+    for (var i=3; i >= 0; i--) {
+      wall = new Wall(Math.random() * canvas.width, Math.random() * canvas.height, 100, 100);
+      wall.render();
+      walls.push(wall);
+    }
 
     addEnemies();
     addTowers();
