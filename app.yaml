@@ -14,8 +14,8 @@ error_handlers:
 
 handlers:
 
-- url: /scripts
-  static_dir: scripts
+- url: /js
+  static_dir: js
 
 - url: /styles
   static_dir: styles

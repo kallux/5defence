@@ -1,9 +1,10 @@
-window.addEventListener('load', init, false);
+window.onload = init;
 
 var canvas,
     stage;
 
 function init() {
-    canvas = document.getElementById("canvas");
+    alert('woot');
+    canvas = document.getElementById("gameCanvas");
     stage = new Stage(canvas);
 }
