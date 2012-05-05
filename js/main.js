@@ -3,7 +3,8 @@ window.onload = init;
 var canvas,
     stage,
     fpsLabel,
-    characters = [];
+    characters = [],
+    run = true;
 
 function init() {
     var i;
@@ -27,12 +28,18 @@ function init() {
     shape.x = parseInt(canvas.width/2-50);
     shape.y = parseInt(canvas.height/2-50);;
     stage.addChild(shape);
-    stage.update();
 
     addCharacters();
 }
 
+function toggleRun() {
+    run = !run;
+}
+
 function tick() {
+    if(!run) {
+        return;
+    }
     var i,
         charLen = characters.length;
     fpsLabel.text = Math.round(Ticker.getMeasuredFPS()) + " fps";
