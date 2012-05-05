@@ -3,13 +3,19 @@ var money,
     buildMarineButtonRect,
     moneyLabel;
 
+function setMoney(amount) {
+    money = amount;
+    moneyLabel.text = "$" + amount;
+}
+
 function initHud() {
-    money = 0;
     buttons = [];
 
-    moneyLabel = new Text("$0", "bold 14px Arial", "#FFF");
+    moneyLabel = new Text("$", "bold 14px Arial", "#FFF");
     moneyLabel.x = canvas.width - 50;
     moneyLabel.y = 20;
+
+    setMoney(100);
 
     var g = new Graphics();
     g.beginFill("#00f");
@@ -24,7 +30,7 @@ function initHud() {
 
     canvas.onclick = function(event) {
         if (intersects(event.x, event.y, buildMarineButtonRect)) {
-            console.log('collision');
+            setMoney(money-10);
         }
     }
 }
