@@ -82,9 +82,8 @@ function Character(x, y) {
     self.entity.x = x;
     self.entity.y = y;
     self.entity.rotation = Math.random() * 360;
-//    var a = Math.PI * 2 * Math.random();
     var a = self.entity.rotation / 360.0 * Math.PI * 2;
-    self.entity.v = Math.random()* self.speed;
+    self.entity.v = Math.random() * self.speed;
     self.entity.vX = Math.cos(a) * self.entity.v;
     self.entity.vY = Math.sin(a) * self.entity.v;
     self.entity.regX = Math.round(self.entity.width / 2.0);
@@ -97,14 +96,15 @@ function Character(x, y) {
         self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
 
         if(self.moveToPoint !== null) {
-            self.entity.rotation = 360 - Math.atan2(- self.entity.x + self.moveToPoint.x, - self.entity.y + self.moveToPoint.y) * 180;
+            self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
+
             self.label.text += ' ' + Math.round(self.entity.rotation);
         }
 
         self.entity.x += self.entity.vX;
         self.entity.y += self.entity.vY;
 
-        self.label.x = self.entity.x+10;
+        self.label.x = self.entity.x + 10;
         self.label.y = self.entity.y;
 
         if(self.entity.x > canvas.width) {
