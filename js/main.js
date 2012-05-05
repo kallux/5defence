@@ -54,6 +54,7 @@ function addCharacters() {
 function Character(x, y) {
     var self = this;
     self.speed = 1;
+    self.rotateAmount = 30;
     self.entity = new Text("character: ", "8px Arial", "#CCC");
     self.update = function () {
         self.entity.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
@@ -61,30 +62,35 @@ function Character(x, y) {
         self.entity.y += self.entity.vY;
 
         if(self.entity.x > canvas.width) {
-            self.entity.vX = -self.entity.vX;
+            self.entity.rotation += Math.random() * self.rotateAmount;
         }
         if(self.entity.x < 0) {
             self.entity.x = 0;
-            self.entity.vX = -self.entity.vX;
+            self.entity.rotation += Math.random() * self.rotateAmount;
         }
         if(self.entity.y > canvas.height) {
-            self.entity.vY = -self.entity.vY;
+            self.entity.rotation += Math.random() * self.rotateAmount;
         }
         if(self.entity.y < 0) {
-            self.entity.vY = -self.entity.vY;
             self.entity.y = 0;
+            self.entity.rotation += Math.random() * self.rotateAmount;
         }
-        self.entity.regX = Math.round(self.entity.width / 2.0);
-        self.entity.regY = Math.round(self.entity.height / 2.0);
+
+        var a = self.entity.rotation / 360.0 * Math.PI * 2;
+        self.entity.vX = Math.cos(a) * self.entity.v;
+        self.entity.vY = Math.sin(a) * self.entity.v;
     };
 
     self.entity.x = x;
     self.entity.y = y;
     self.entity.rotation = Math.random() * 360;
-    var a = Math.PI * 2 * Math.random();
-    var v = (Math.random() - 0.5) * 2 * self.speed;
-    self.entity.vX = Math.cos(a) * v;
-    self.entity.vY = Math.sin(a) * v;
+//    var a = Math.PI * 2 * Math.random();
+    var a = self.entity.rotation / 360.0 * Math.PI * 2;
+    self.entity.v = Math.random()* self.speed;
+    self.entity.vX = Math.cos(a) * self.entity.v;
+    self.entity.vY = Math.sin(a) * self.entity.v;
+    self.entity.regX = Math.round(self.entity.width / 2.0);
+    self.entity.regY = Math.round(self.entity.height / 2.0);
 
     stage.addChild(self.entity);
     return self;
