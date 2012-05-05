@@ -90,14 +90,14 @@ function Character(x, y) {
     self.entity.regY = Math.round(self.entity.height / 2.0);
 
     stage.addChild(self.entity);
-    stage.addChild(self.entity.text);
+    stage.addChild(self.label);
 
     self.update = function () {
         self.label.text = Math.round(self.entity.x) + ' ' + Math.round(self.entity.y);
 
         if(self.moveToPoint !== null) {
             self.entity.rotation = 360 - Math.atan2(- self.entity.x + self.moveToPoint.x, - self.entity.y + self.moveToPoint.y) * 180;
-            self.entity.text.text += ' ' + Math.round(self.entity.rotation);
+            self.label.text += ' ' + Math.round(self.entity.rotation);
         }
 
         self.entity.x += self.entity.vX;
@@ -128,7 +128,6 @@ function Character(x, y) {
         self.entity.vY = Math.sin(a) * self.entity.v;
     };
 
-    stage.addChild(self.label);
     return self;
 }
 
