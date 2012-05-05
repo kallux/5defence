@@ -28,11 +28,11 @@ function initHud() {
     stage.addChild(moneyLabel);
     stage.addChild(buildMarineButton);
 
-    canvas.onclick = function(event) {
+    canvas.addEventListener('click', function(event) {
         if (intersects(event.x, event.y, buildMarineButtonRect)) {
             setMoney(money-10);
         }
-    }
+    });
 }
 
 function intersects(x, y, r) {
