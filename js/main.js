@@ -54,7 +54,8 @@ function tick() {
 
 function addCharacters() {
     for(i = 0; i < 100; i += 1) {
-        characters.push(new Character(Math.random() * canvas.width, Math.random() * canvas.height));
+        var char = new Character(Math.random() * canvas.width, Math.random() * canvas.height);
+        characters.push(char);
     }
 }
 
@@ -65,9 +66,9 @@ function Character(x, y) {
 
     var g = new Graphics();
     g.beginFill("#0f0");
-    g.rect(0,0,10,10);
+    g.rect(-4,-4,10,10);
     g.beginFill("#00f");
-    g.drawCircle(10,5,3);
+    g.drawCircle(5,1,3);
     var shape = new Shape(g);
     self.entity = new Shape(g);
     self.label = new Text(Math.round(self.entity.x)+" "+Math.round(self.entity.y), "8px Arial", "#CCC");
@@ -115,3 +116,4 @@ function Character(x, y) {
     stage.addChild(self.label);
     return self;
 }
+
