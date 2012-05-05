@@ -31,6 +31,7 @@ function initHud() {
     canvas.addEventListener('click', function(event) {
         if (intersects(event.x, event.y, buildMarineButtonRect)) {
             setMoney(money-10);
+            addMarine();
         }
     });
 }
