@@ -49,13 +49,9 @@ function init() {
     enemySpawnpoints.push(new Point(canvas.width / 2, canvas.height));
     enemySpawnpoints.push(new Point(0, canvas.height));
 
-    for(var i = 3; i >= 0; i--) {
-        wall = new Wall(parseInt(Math.random() * canvas.width), parseInt(Math.random() * canvas.height), 100, 100);
-        wall.render();
-        walls.push(wall);
-    }
 
 
+    addWalls();
     addEnemies();
     addTowers();
     initHud();
@@ -144,6 +140,18 @@ function addTowers(count) {
         t = new Tower(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
         towers.push(t);
     }
+}
+
+function addWalls()
+{
+    wall = new Wall(200, 100, 50, 300);
+    wall.render();
+    walls.push(wall);
+    wall = new Wall(250, 100, 100, 50);
+    wall.render();
+    wall = new Wall(250, 350, 100, 50);
+    wall.render();
+    walls.push(wall);
 }
 
 function click() {
