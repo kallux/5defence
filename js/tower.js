@@ -5,12 +5,12 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
     self.attackRange = attackRange;
     self.attackStrength = attackStrength;
 
-    var g = new Graphics();
-    g.beginFill("#0f0");
-    g.rect(-4, -4, 10, 10);
-    g.beginFill("#00f");
-    g.drawCircle(5, 1, 3);
-    self.character = new Character(1, x, y, g, life, true);
+//    var g = new Graphics();
+//    g.beginFill("#0f0");
+//    g.rect(-4, -4, 10, 10);
+//    g.beginFill("#00f");
+//    g.drawCircle(5, 1, 3);
+    self.character = new Character(1, x, y, towerGraphic, life, true);
 
     self.update = function () {
         var i = 0,

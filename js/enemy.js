@@ -5,12 +5,12 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     self.attackRange = attackRange;
     self.attackStrength = attackStrength;
 
-    var g = new Graphics();
-    g.beginFill("#f00");
-    g.rect(-4, -4, 10, 10);
-    g.beginFill("#00f");
-    g.drawCircle(5, 1, 3);
-    self.character = new Character(Math.random() + 1, x, y, g, life, false);
+//    var g = new Graphics();
+//    g.beginFill("#f00");
+//    g.rect(-4, -4, 10, 10);
+//    g.beginFill("#00f");
+//    g.drawCircle(5, 1, 3);
+    self.character = new Character(Math.random() + 1, x, y, enemyGraphic, life, false);
 
     self.update = function () {
         var i = 0,

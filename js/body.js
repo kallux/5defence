@@ -5,6 +5,8 @@ function Body(x, y, rotation, graphics) {
     self.timer = Math.random() * 200 + 100;
     self.entity.x = x;
     self.entity.y = y;
+    self.entity.regX = 8;
+    self.entity.regY = 8;
     self.entity.rotation = rotation;
 
     stage.addChildAt(self.entity,bodies.length + 2);

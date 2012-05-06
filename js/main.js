@@ -8,10 +8,12 @@ var canvas,
     bodies = [],
     walls = [],
     enemies = [],
+    enemyGraphic,
     enemyBodyGraphic,
     enemySpawnpoints = [],
     currentEnemySpawnpoint = 0,
     towers = [],
+    towerGraphic,
     towerBodyGraphic,
     run = true;
 
@@ -21,6 +23,8 @@ function init() {
     canvas.onclick = click;
     stage = new Stage(canvas);
     backdrop = new Bitmap('/images/bg.jpg');
+    towerGraphic = new Bitmap('/images/marine.png');
+    enemyGraphic = new Bitmap('/images/enemy.png');
     enemyBodyGraphic = new Bitmap('/images/zplat.png');
     towerBodyGraphic = new Bitmap('/images/dead-marine.png');
     stage.addChild(backdrop);

@@ -19,8 +19,8 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
     var a = self.entity.rotation / 360.0 * Math.PI * 2;
     self.entity.vX = Math.cos(a) * self.speed;
     self.entity.vY = Math.sin(a) * self.speed;
-    self.entity.regX = Math.round(self.entity.width / 2.0);
-    self.entity.regY = Math.round(self.entity.height / 2.0);
+    self.entity.regX = 8;
+    self.entity.regY = 8;
 
     stage.addChild(self.entity);
     stage.addChild(self.label);
