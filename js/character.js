@@ -2,7 +2,7 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
     var self = this;
     self.baseSpeed = speed;
     self.speed = self.baseSpeed;
-    self.rotateAmount = 15;
+    self.rotateAmount = 23;
     self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
     self.moveToPoint = null;
     self.baseLife = life;

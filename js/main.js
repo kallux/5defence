@@ -8,6 +8,7 @@ var canvas,
     flareGraphic,
     bloodGraphic,
     stoneGraphic,
+    goalGraphic,
     bodies = [],
     walls = [],
     enemies = [],
@@ -28,6 +29,7 @@ function init() {
     backdrop = new Bitmap('/images/bg.jpg');
     backdrop.sourceRect = new Rectangle(0, 0, canvas.width, canvas.height);
     stoneGraphic = new Bitmap('/images/stone.jpg');
+    goalGraphic = new Bitmap('/images/goal.png');
     flareGraphic = new Bitmap('/images/flare.png');
     bloodGraphic = new Bitmap('/images/blood.png');
     towerGraphic = new Bitmap('/images/marine.png');
@@ -55,6 +57,7 @@ function init() {
     backdrop.onClick =click;
     addWalls();
     addEnemies();
+    towers.push(new Goal(canvas.width / 2, canvas.height / 2, 99999));
     addTowers();
     initHud();
 }
