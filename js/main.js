@@ -96,6 +96,9 @@ function addEnemies(count) {
         enemies.push(e);
     }
     currentEnemySpawnpoint += 1;
+    if(currentEnemySpawnpoint > enemySpawnpoints.length - 1) {
+        currentEnemySpawnpoint = 0;
+    }
 }
 
 function addTowers(count) {
