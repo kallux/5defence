@@ -21,6 +21,15 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
             return;
         }
 
+        for(i = 0; i < enemies.length; i += 1) {
+            var d = self.character.distanceTo(enemies[i].character);
+            if(d === 0) {
+                self.character.x = Math.round((Math.random() * 6 - 3));
+                self.character.y = Math.round((Math.random() * 6 - 3));
+                break;
+            }
+        }
+
         self.character.moveToPoint = null;
         self.character.speed = self.character.baseSpeed;
 
