@@ -49,6 +49,7 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
     };
 
     self.attack = function (enemy) {
+        self.character.entity.rotation = Math.atan2(enemy.character.entity.y - self.character.entity.y, enemy.character.entity.x - self.character.entity.x) * 180.0 / Math.PI;
         enemy.character.life -= self.attackStrength * dt;
     };
 }
