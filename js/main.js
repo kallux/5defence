@@ -4,6 +4,7 @@ var canvas,
     stage,
     dt = 10,
     fpsLabel,
+    backdrop,
     walls = [],
     enemies = [],
     enemySpawnpoints = [],
@@ -16,6 +17,8 @@ function init() {
     canvas = document.getElementById("gameCanvas");
     canvas.onclick = click;
     stage = new Stage(canvas);
+    backdrop = new Bitmap('/images/bg.jpg');
+    stage.addChild(backdrop);
 
     // add a text object to output the current FPS:
     fpsLabel = new Text("-- fps", "bold 14px Arial", "#FFF");
@@ -33,11 +36,12 @@ function init() {
     enemySpawnpoints.push(new Point(canvas.width / 2, canvas.height));
     enemySpawnpoints.push(new Point(0, canvas.height));
 
-    for (var i=3; i >= 0; i--) {
-      wall = new Wall(parseInt(Math.random() * canvas.width), parseInt(Math.random() * canvas.height), 100, 100);
-      wall.render();
-      walls.push(wall);
+    for(var i = 3; i >= 0; i--) {
+        wall = new Wall(parseInt(Math.random() * canvas.width), parseInt(Math.random() * canvas.height), 100, 100);
+        wall.render();
+        walls.push(wall);
     }
+
 
     addEnemies();
     addTowers();
