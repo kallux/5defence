@@ -6,7 +6,7 @@ var canvas,
     walls = [],
     enemies = [],
     enemySpawnpoints = [],
-    currentSpawnpoint = 0,
+    currentEnemySpawnpoint = 0,
     towers = [],
     run = true;
 
@@ -88,12 +88,14 @@ function addEnemies(count) {
         sensorRange = 100,
         attackRange = 3,
         attackStrength = 3,
-        life = 200;
+        life = 200,
+        startPoint = enemySpawnpoints[currentEnemySpawnpoint];
     count = count || 100;
     for(i = 0; i < count; i += 1) {
-        e = new Enemy(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
+        e = new Enemy(startPoint.x, startPoint.y, sensorRange, attackRange, attackStrength, life);
         enemies.push(e);
     }
+    currentEnemySpawnpoint += 1;
 }
 
 function addTowers(count) {
@@ -112,8 +114,7 @@ function addTowers(count) {
 function click() {
     var p = new Point(stage.mouseX, stage.mouseY);
     for(i = 0; i < towers.length; i += 1) {
-        if(towers[i].selected) {
-            towers[i].moveToPoint = p;
-        }
+        towers[i].character.moveToPoint = p;
     }
+    console.log("Marines move to: " + p.x + ' ' + p.y);
 }
