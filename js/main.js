@@ -23,8 +23,8 @@ var canvas,
 function init() {
     var i;
     canvas = document.getElementById("gameCanvas");
-    canvas.onclick = click;
     stage = new Stage(canvas);
+    Touch.enable(stage);
     backdrop = new Bitmap('/images/bg.jpg');
     backdrop.sourceRect = new Rectangle(0, 0, canvas.width, canvas.height);
     stoneGraphic = new Bitmap('/images/stone.jpg');
@@ -52,8 +52,7 @@ function init() {
     enemySpawnpoints.push(new Point(canvas.width / 2, canvas.height));
     enemySpawnpoints.push(new Point(0, canvas.height));
 
-
-
+    backdrop.onClick =click;
     addWalls();
     addEnemies();
     addTowers();
@@ -158,7 +157,7 @@ function addWalls()
 }
 
 function click() {
-    if(stage.mouseX <= canvas.width-50 && stage.mouseY <= canvas.height-50) {
+    if(stage.mouseX <= canvas.width-25 && stage.mouseY <= canvas.height-25) {
       var p = new Point(stage.mouseX, stage.mouseY);
       for(i = 0; i < towers.length; i += 1) {
           towers[i].character.moveToPoint = p;

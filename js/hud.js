@@ -41,13 +41,13 @@ function initHud() {
     stage.addChild(moneyLabel);
     stage.addChild(buildMarineButton);
 
-    canvas.addEventListener('click', function (event) {
+    buildMarineButton.onClick = function (event) {
         if(intersects(stage.mouseX, stage.mouseY, buildMarineButtonRect)) {
             if(removeMoney(10)) {
                 addTowers(1);
             }
         }
-    }, false);
+    };
 }
 
 function intersects(x, y, r) {
