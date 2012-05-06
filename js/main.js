@@ -123,7 +123,7 @@ function addEnemies(count) {
         attackStrength = 3,
         life = 200,
         startPoint = enemySpawnpoints[currentEnemySpawnpoint];
-    count = count || 100;
+    count = count || 120;
     for(i = 0; i < count; i += 1) {
         e = new Enemy(startPoint.x, startPoint.y, sensorRange, attackRange, attackStrength, life);
         enemies.push(e);
