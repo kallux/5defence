@@ -1,4 +1,4 @@
-function Character(speed, x, y, graphics, life) {
+function Character(speed, x, y, graphics, life, stopAtTarget) {
     var self = this;
     self.baseSpeed = speed;
     self.speed = self.baseSpeed;
@@ -8,6 +8,7 @@ function Character(speed, x, y, graphics, life) {
     self.baseLife = life;
     self.life = life;
     self.isDead = false;
+    self.stopAtTarget = stopAtTarget;
 
     self.entity = new Shape(graphics);
     self.label = new Text(Math.round(self.entity.x) + " " + Math.round(self.entity.y), "8px Arial", "#CCC");
@@ -25,6 +26,7 @@ function Character(speed, x, y, graphics, life) {
     stage.addChild(self.label);
 
     self.update = function () {
+        var move = !self.stopAtTarget;
         self.label.text = Math.round(self.life / self.baseLife * 100) + '%';
 
         for(var i = 0; walls.length > i; i++) {
@@ -42,12 +44,19 @@ function Character(speed, x, y, graphics, life) {
         }
 
         if(self.moveToPoint !== null) {
-            self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
+            move = true;
+            if(Math.round(self.moveToPoint.x) === Math.round(self.entity.x) ||
+                Math.round(self.moveToPoint.y) === Math.round(self.entity.y)) {
+                self.moveToPoint = null;
+            } else {
+                self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
+            }
         }
 
-        self.entity.x += self.entity.vX;
-        self.entity.y += self.entity.vY;
-
+        if(move) {
+            self.entity.x += self.entity.vX;
+            self.entity.y += self.entity.vY;
+        }
         self.label.x = self.entity.x + 10;
         self.label.y = self.entity.y;
 

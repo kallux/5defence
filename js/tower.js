@@ -10,7 +10,7 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
     g.rect(-4, -4, 10, 10);
     g.beginFill("#00f");
     g.drawCircle(5, 1, 3);
-    self.character = new Character(1, x, y, g, life);
+    self.character = new Character(1, x, y, g, life, true);
 
     self.update = function () {
         var i = 0,
@@ -22,11 +22,13 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
         }
 
         for(i = 0; i < towers.length; i += 1) {
-            var d = self.character.distanceTo(towers[i].character);
-            if(d < 10) {
-                self.character.x = Math.round((Math.random() * 10 - 5));
-                self.character.y = Math.round((Math.random() * 10 - 5));
-                break;
+            if(towers[i] !== self) {
+                var d = self.character.distanceTo(towers[i].character);
+                if(d < 3) {
+                    self.character.entity.x += Math.round((Math.random() * 6 - 3));
+                    self.character.entity.y += Math.round((Math.random() * 6 - 3));
+                    break;
+                }
             }
         }
 

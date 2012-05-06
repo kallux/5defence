@@ -10,7 +10,7 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     g.rect(-4, -4, 10, 10);
     g.beginFill("#00f");
     g.drawCircle(5, 1, 3);
-    self.character = new Character(Math.random() + 1, x, y, g, life);
+    self.character = new Character(Math.random() + 1, x, y, g, life, false);
 
     self.update = function () {
         var i = 0,
@@ -22,11 +22,13 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
         }
 
         for(i = 0; i < enemies.length; i += 1) {
-            var d = self.character.distanceTo(enemies[i].character);
-            if(d < 3) {
-                self.character.x = Math.round((Math.random() * 6 - 3));
-                self.character.y = Math.round((Math.random() * 6 - 3));
-                break;
+            if(enemies[i] !== self) {
+                var d = self.character.distanceTo(enemies[i].character);
+                if(d < 3) {
+                    self.character.entity.x += Math.round((Math.random() * 6 - 3));
+                    self.character.entity.y += Math.round((Math.random() * 6 - 3));
+                    break;
+                }
             }
         }
 
