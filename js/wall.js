@@ -14,7 +14,7 @@ function Wall(xx, yy, width, height)
       var shape = new Shape(g);
       shape.x = self.x;
       shape.y = self.y;
-      shape.shadow = new Shadow('#000', 5, 5, 15);
+      //shape.shadow = new Shadow('#000', 5, 5, 15);
       stage.addChild(shape);
       return shape;
   }

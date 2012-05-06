@@ -151,6 +151,7 @@ function addWalls()
     walls.push(wall);
     wall = new Wall(250, 100, 100, 50);
     wall.render();
+    walls.push(wall);
     wall = new Wall(250, 350, 100, 50);
     wall.render();
     walls.push(wall);
