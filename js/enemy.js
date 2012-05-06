@@ -10,6 +10,7 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     self.showFlare = false;
     self.flareTime = 0;
     self.flare = new Shape(bloodGraphic);
+    self.target = new Point(canvas.width / 2 + Math.random() * 100 - 50, canvas.height / 2 + Math.random() * 100 - 50);
 
     self.update = function () {
         var i = 0,
@@ -37,7 +38,14 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
             }
         }
 
-        self.character.moveToPoint = null;
+        if(self.target) {
+            self.character.moveToPoint = self.target;
+            if(Math.round(self.character.entity.x) === Math.round(self.target.x) &&
+            Math.round(self.character.entity.y) === Math.round(self.target.y)) {
+                self.target = null;
+                self.character.moveToPoint = null;
+            }
+        }
         self.character.speed = self.character.baseSpeed;
 
         for(i = 0; i < towers.length; i += 1) {

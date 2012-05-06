@@ -28,7 +28,7 @@ function initHud() {
     moneyLabel.x = canvas.width - 50;
     moneyLabel.y = 20;
 
-    setMoney(100);
+    setMoney(0);
 
     var g = new Graphics();
     g.beginFill("#00f");
