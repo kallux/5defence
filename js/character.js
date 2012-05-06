@@ -1,6 +1,6 @@
 function Character(speed, x, y, graphics, life) {
     var self = this;
-    self.baseSpeed = Math.random() * speed;
+    self.baseSpeed = speed;
     self.speed = self.baseSpeed;
     self.rotateAmount = 15;
     self.rotateDirection = Math.round(Math.random()) === 1 ? 1 : -1;
@@ -33,8 +33,8 @@ function Character(speed, x, y, graphics, life) {
                 self.entity.y -= self.entity.vY;
                 self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
                 var a = self.entity.rotation / 360.0 * Math.PI * 2;
-                self.entity.vX = Math.cos(a) * self.speed;
-                self.entity.vY = Math.sin(a) * self.speed;
+                self.entity.vX = Math.cos(a) * self.speed * dt;
+                self.entity.vY = Math.sin(a) * self.speed * dt;
                 self.entity.x += self.entity.vX;
                 self.entity.y += self.entity.vY;
                 return;
@@ -71,8 +71,8 @@ function Character(speed, x, y, graphics, life) {
 
 
         var a = self.entity.rotation / 360.0 * Math.PI * 2;
-        self.entity.vX = Math.cos(a) * self.speed;
-        self.entity.vY = Math.sin(a) * self.speed;
+        self.entity.vX = Math.cos(a) * self.speed * dt;
+        self.entity.vY = Math.sin(a) * self.speed * dt;
     };
 
     self.distanceTo = function (character) {

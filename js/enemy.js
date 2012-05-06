@@ -10,7 +10,7 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     g.rect(-4, -4, 10, 10);
     g.beginFill("#00f");
     g.drawCircle(5, 1, 3);
-    self.character = new Character(2, x, y, g, life);
+    self.character = new Character(Math.random() + 1, x, y, g, life);
 
     self.update = function () {
         var i = 0,
@@ -53,6 +53,6 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     };
 
     self.attack = function (tower) {
-        tower.character.life -= self.attackStrength;
+        tower.character.life -= self.attackStrength * dt;
     };
 }

@@ -2,6 +2,7 @@ window.onload = init;
 
 var canvas,
     stage,
+    dt = 10,
     fpsLabel,
     walls = [],
     enemies = [],
@@ -54,6 +55,7 @@ function tick() {
     var i,
         enemiesLen = enemies.length,
         towersLen = towers.length;
+    dt = 60 / Ticker.getMeasuredFPS(3);
     fpsLabel.text = Math.round(Ticker.getMeasuredFPS()) + " fps";
 
     for(var i = enemiesLen - 1; i >= 0; i--) {

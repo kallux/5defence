@@ -21,6 +21,15 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
             return;
         }
 
+        for(i = 0; i < towers.length; i += 1) {
+            var d = self.character.distanceTo(towers[i].character);
+            if(d < 10) {
+                self.character.x = Math.round((Math.random() * 10 - 5));
+                self.character.y = Math.round((Math.random() * 10 - 5));
+                break;
+            }
+        }
+
         for(i = 0; i < enemies.length; i += 1) {
             var d = self.character.distanceTo(enemies[i].character);
             if(d <= self.sensorRange) {
@@ -38,6 +47,6 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
     };
 
     self.attack = function (enemy) {
-        enemy.character.life -= self.attackStrength;
+        enemy.character.life -= self.attackStrength * dt;
     };
 }
