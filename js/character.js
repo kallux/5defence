@@ -70,6 +70,10 @@ function Character(speed, x, y, graphics, life) {
     };
 
     self.distanceTo = function (character) {
+        if(character.entity.x === self.entity.x &&
+            character.entity.y === self.entity.Y) {
+            return 0;
+        }
         var dx = character.entity.x - self.entity.x,
             dy = character.entity.y - self.entity.y;
         return Math.sqrt((dx * dx) + (dy * dy));
