@@ -7,6 +7,7 @@ var canvas,
     backdrop,
     flareGraphic,
     bloodGraphic,
+    stoneGraphic,
     bodies = [],
     walls = [],
     enemies = [],
@@ -25,6 +26,8 @@ function init() {
     canvas.onclick = click;
     stage = new Stage(canvas);
     backdrop = new Bitmap('/images/bg.jpg');
+    backdrop.sourceRect = new Rectangle(0, 0, canvas.width, canvas.height);
+    stoneGraphic = new Bitmap('/images/stone.jpg');
     flareGraphic = new Bitmap('/images/flare.png');
     bloodGraphic = new Bitmap('/images/blood.png');
     towerGraphic = new Bitmap('/images/marine.png');

@@ -34,8 +34,10 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
                 var a = self.entity.rotation / 360.0 * Math.PI * 2;
                 self.entity.vX = Math.cos(a) * self.speed * dt;
                 self.entity.vY = Math.sin(a) * self.speed * dt;
-                self.entity.x += self.entity.vX;
-                self.entity.y += self.entity.vY;
+                if(!walls[i].collision(self.entity.x + self.entity.vX, self.entity.y + self.entity.vY)) {
+                    self.entity.x += self.entity.vX;
+                    self.entity.y += self.entity.vY;
+                }
                 return;
             }
         }
