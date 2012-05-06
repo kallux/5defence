@@ -58,8 +58,8 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
         self.flare.rotation = self.character.entity.rotation;
         self.flare.x = self.character.entity.x;
         self.flare.y = self.character.entity.y;
-        self.flare.x += Math.cos(a) * 12 * dt;
-        self.flare.y += Math.sin(a) * 12 * dt;
+        self.flare.x += Math.cos(a) * 12;
+        self.flare.y += Math.sin(a) * 12;
         self.flare.regX = 8;
         self.flare.regY = 8;
         if(!self.showFlare && self.flareTime <= 0) {
