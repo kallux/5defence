@@ -23,7 +23,7 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
 
         for(i = 0; i < enemies.length; i += 1) {
             var d = self.character.distanceTo(enemies[i].character);
-            if(d === 0) {
+            if(d < 3) {
                 self.character.x = Math.round((Math.random() * 6 - 3));
                 self.character.y = Math.round((Math.random() * 6 - 3));
                 break;
