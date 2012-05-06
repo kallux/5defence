@@ -15,7 +15,6 @@ function Character(speed, x, y, graphics, life) {
     self.entity.x = x;
     self.entity.y = y;
     self.entity.rotation = Math.random() * 360;
-    //    var a = Math.PI * 2 * Math.random();
     var a = self.entity.rotation / 360.0 * Math.PI * 2;
     self.entity.vX = Math.cos(a) * self.speed;
     self.entity.vY = Math.sin(a) * self.speed;
@@ -28,15 +27,22 @@ function Character(speed, x, y, graphics, life) {
     self.update = function () {
         self.label.text = Math.round(self.life / self.baseLife * 100) + '%';
 
-        if(self.moveToPoint !== null) {
-            self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
-        }
-
         for(var i = 0; walls.length > i; i++) {
             if(walls[i].collision(self.entity.x, self.entity.y)) {
+                self.entity.x -= self.entity.vX;
+                self.entity.y -= self.entity.vY;
                 self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
-                break;
+                var a = self.entity.rotation / 360.0 * Math.PI * 2;
+                self.entity.vX = Math.cos(a) * self.speed;
+                self.entity.vY = Math.sin(a) * self.speed;
+                self.entity.x += self.entity.vX;
+                self.entity.y += self.entity.vY;
+                return;
             }
+        }
+
+        if(self.moveToPoint !== null) {
+            self.entity.rotation = Math.atan2(self.moveToPoint.y - self.entity.y, self.moveToPoint.x - self.entity.x) * 180.0 / Math.PI;
         }
 
         self.entity.x += self.entity.vX;
