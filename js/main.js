@@ -137,7 +137,7 @@ function addTowers(count) {
         life = 1000;
     count = count || 10;
     for(i = 0; i < count; i += 1) {
-        t = new Tower(Math.random() * canvas.width, Math.random() * canvas.height, sensorRange, attackRange, attackStrength, life);
+        t = new Tower(canvas.width / 2, canvas.height / 2, sensorRange, attackRange, attackStrength, life);
         towers.push(t);
     }
 }
