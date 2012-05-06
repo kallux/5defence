@@ -7,9 +7,19 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
 
     self.character = new Character(Math.random() + 1, x, y, enemyGraphic, life, false);
 
+    self.showFlare = false;
+    self.flareTime = 0;
+    self.flare = new Shape(bloodGraphic);
+
     self.update = function () {
         var i = 0,
             move = true;
+
+        self.flareTime -= dt;
+        if(self.showFlare && self.flareTime <= 0) {
+            stage.removeChild(self.flare);
+            self.showFlare = false;
+        }
 
         if(self.character.life <= 0) {
             self.character.isDead = true;
@@ -50,8 +60,20 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     };
 
     self.attack = function (tower) {
+        var a = self.character.entity.rotation / 360.0 * Math.PI * 2;
+        self.flare.rotation = self.character.entity.rotation;
+        self.flare.x = self.character.entity.x;
+        self.flare.y = self.character.entity.y;
+        self.flare.x += Math.cos(a) * 4 * dt;
+        self.flare.y += Math.sin(a) * 4 * dt;
+        self.flare.regX = 8;
+        self.flare.regY = 8;
+        if(!self.showFlare && self.flareTime <= 0) {
+            stage.addChildAt(self.flare, stage.getNumChildren() - 1);
+            self.showFlare = true;
+            self.flareTime = 5;
+        }
         self.character.entity.rotation = Math.atan2(tower.character.entity.y - self.character.entity.y, tower.character.entity.x - self.character.entity.x) * 180.0 / Math.PI;
-
         tower.character.life -= self.attackStrength * dt;
     };
 }

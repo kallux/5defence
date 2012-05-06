@@ -19,7 +19,6 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
         if(self.showFlare && self.flareTime <= 0) {
             stage.removeChild(self.flare);
             self.showFlare = false;
-            console.log('removed flare');
         }
 
         if(self.character.life <= 0) {
@@ -67,7 +66,6 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
             stage.addChildAt(self.flare, stage.getNumChildren() - 1);
             self.showFlare = true;
             self.flareTime = 5;
-            console.log("added flare at " + self.flare.x + " " + self.flare.y, a);
         }
         self.character.entity.rotation = Math.atan2(enemy.character.entity.y - self.character.entity.y, enemy.character.entity.x - self.character.entity.x) * 180.0 / Math.PI;
         enemy.character.life -= self.attackStrength * dt;
