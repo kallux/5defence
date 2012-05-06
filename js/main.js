@@ -149,21 +149,21 @@ function addTowers(count) {
 
 function addWalls()
 {
-    var wall1 = new Wall(250, 100, 500, 50);
-    walls.push(wall1);
-    wall1.render();
-    var wall2 = new Wall(150, 200, 100, 100);
-    walls.push(wall2);
-    wall2.render();
-    var wall3 = new Wall(750, 200, 100, 100);
-    walls.push(wall3);
-    wall3.render();
-    var wall4 = new Wall(200, 350, 275, 50);
-    walls.push(wall4);
-    wall4.render();
-    var wall5 = new Wall(525, 350, 275, 50);
-    walls.push(wall5);
-    wall5.render();
+    wall = new Wall(250, 100, 500, 50);
+    walls.push(wall);
+    wall.render();
+    wall = new Wall(150, 200, 100, 100);
+    walls.push(wall);
+    wall.render();
+    wall = new Wall(750, 200, 100, 100);
+    walls.push(wall);
+    wall.render();
+    wall = new Wall(200, 350, 275, 50);
+    walls.push(wall);
+    wall.render();
+    wall = new Wall(525, 350, 275, 50);
+    walls.push(wall);
+    wall.render();
 }
 
 function click() {
