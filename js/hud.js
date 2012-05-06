@@ -43,7 +43,7 @@ function initHud() {
 
     buildMarineButton.onClick = function (event) {
         if(intersects(stage.mouseX, stage.mouseY, buildMarineButtonRect)) {
-            if(removeMoney(10)) {
+            if(removeMoney(50)) {
                 addTowers(1);
             }
         }
