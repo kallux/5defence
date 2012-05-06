@@ -155,8 +155,11 @@ function addWalls()
 }
 
 function click() {
-    var p = new Point(stage.mouseX, stage.mouseY);
-    for(i = 0; i < towers.length; i += 1) {
-        towers[i].character.moveToPoint = p;
+    if(stage.mouseX <= canvas.width-50 && stage.mouseY <= canvas.height-50) {
+      var p = new Point(stage.mouseX, stage.mouseY);
+      for(i = 0; i < towers.length; i += 1) {
+          towers[i].character.moveToPoint = p;
+      }
+      console.log("Marines move to: " + p.x + ' ' + p.y);
     }
 }
