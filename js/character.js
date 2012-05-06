@@ -11,7 +11,6 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
     self.stopAtTarget = stopAtTarget;
 
     self.entity = new Shape(graphics);
-    self.label = new Text(Math.round(self.entity.x) + " " + Math.round(self.entity.y), "8px Arial", "#CCC");
 
     self.entity.x = x;
     self.entity.y = y;
@@ -23,11 +22,9 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
     self.entity.regY = 8;
 
     stage.addChild(self.entity);
-    stage.addChild(self.label);
 
     self.update = function () {
         var move = !self.stopAtTarget;
-        self.label.text = Math.round(self.life / self.baseLife * 100) + '%';
 
         for(var i = 0; walls.length > i; i++) {
             if(walls[i].collision(self.entity.x, self.entity.y)) {
@@ -57,8 +54,6 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
             self.entity.x += self.entity.vX;
             self.entity.y += self.entity.vY;
         }
-        self.label.x = self.entity.x + 10;
-        self.label.y = self.entity.y;
 
         if(self.entity.x > canvas.width) {
             self.entity.x = canvas.width;

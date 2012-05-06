@@ -5,11 +5,6 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
     self.attackRange = attackRange;
     self.attackStrength = attackStrength;
 
-//    var g = new Graphics();
-//    g.beginFill("#f00");
-//    g.rect(-4, -4, 10, 10);
-//    g.beginFill("#00f");
-//    g.drawCircle(5, 1, 3);
     self.character = new Character(Math.random() + 1, x, y, enemyGraphic, life, false);
 
     self.update = function () {
@@ -24,9 +19,9 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
         for(i = 0; i < enemies.length; i += 1) {
             if(enemies[i] !== self) {
                 var d = self.character.distanceTo(enemies[i].character);
-                if(d < 3) {
-                    self.character.entity.x += Math.round((Math.random() * 6 - 3));
-                    self.character.entity.y += Math.round((Math.random() * 6 - 3));
+                if(d < 8) {
+                    self.character.entity.x += Math.round((Math.random() * 8 - 4));
+                    self.character.entity.y += Math.round((Math.random() * 8 - 4));
                     break;
                 }
             }
