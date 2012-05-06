@@ -5,6 +5,7 @@ var canvas,
     dt = 10,
     fpsLabel,
     backdrop,
+    flareGraphic,
     bodies = [],
     walls = [],
     enemies = [],
@@ -23,6 +24,7 @@ function init() {
     canvas.onclick = click;
     stage = new Stage(canvas);
     backdrop = new Bitmap('/images/bg.jpg');
+    flareGraphic = new Bitmap('/images/flare.png');
     towerGraphic = new Bitmap('/images/marine.png');
     enemyGraphic = new Bitmap('/images/enemy.png');
     enemyBodyGraphic = new Bitmap('/images/zplat.png');
@@ -78,7 +80,6 @@ function tick() {
             body = new Body(enemies[i].character.entity.x, enemies[i].character.entity.y, enemies[i].character.entity.rotation, enemyBodyGraphic);
             bodies.push(body);
             stage.removeChild(enemies[i].character.entity);
-            stage.removeChild(enemies[i].character.label);
             enemies.splice(i, 1);
             addMoney(1);
         }
@@ -94,7 +95,7 @@ function tick() {
             body = new Body(towers[i].character.entity.x, towers[i].character.entity.y, towers[i].character.entity.rotation, towerBodyGraphic);
             bodies.push(body);
             stage.removeChild(towers[i].character.entity);
-            stage.removeChild(towers[i].character.label);
+            stage.removeChild(towers[i].flare);
             towers.splice(i, 1);
         }
     }
