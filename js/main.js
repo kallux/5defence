@@ -163,6 +163,5 @@ function click() {
       for(i = 0; i < towers.length; i += 1) {
           towers[i].character.moveToPoint = p;
       }
-      console.log("Marines move to: " + p.x + ' ' + p.y);
     }
 }
