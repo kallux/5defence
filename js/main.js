@@ -5,11 +5,14 @@ var canvas,
     dt = 10,
     fpsLabel,
     backdrop,
+    bodies = [],
     walls = [],
     enemies = [],
+    enemyBodyGraphic,
     enemySpawnpoints = [],
     currentEnemySpawnpoint = 0,
     towers = [],
+    towerBodyGraphic,
     run = true;
 
 function init() {
@@ -18,6 +21,8 @@ function init() {
     canvas.onclick = click;
     stage = new Stage(canvas);
     backdrop = new Bitmap('/images/bg.jpg');
+    enemyBodyGraphic = new Bitmap('/images/zplat.png');
+    towerBodyGraphic = new Bitmap('/images/dead-marine.png');
     stage.addChild(backdrop);
 
     // add a text object to output the current FPS:
@@ -57,6 +62,7 @@ function tick() {
         return;
     }
     var i,
+        body,
         enemiesLen = enemies.length,
         towersLen = towers.length;
     dt = 60 / Ticker.getMeasuredFPS(3);
@@ -65,6 +71,8 @@ function tick() {
     for(var i = enemiesLen - 1; i >= 0; i--) {
         enemies[i].update();
         if(enemies[i].character.isDead) {
+            body = new Body(enemies[i].character.entity.x, enemies[i].character.entity.y, enemies[i].character.entity.rotation, enemyBodyGraphic);
+            bodies.push(body);
             stage.removeChild(enemies[i].character.entity);
             stage.removeChild(enemies[i].character.label);
             enemies.splice(i, 1);
@@ -76,12 +84,22 @@ function tick() {
         addEnemies(100);
     }
 
-    for(var i = towersLen - 1; i >= 0; i--) {
+    for(i = towersLen - 1; i >= 0; i--) {
         towers[i].update();
         if(towers[i].character.isDead) {
+            body = new Body(towers[i].character.entity.x, towers[i].character.entity.y, towers[i].character.entity.rotation, towerBodyGraphic);
+            bodies.push(body);
             stage.removeChild(towers[i].character.entity);
             stage.removeChild(towers[i].character.label);
             towers.splice(i, 1);
+        }
+    }
+
+    for(i = bodies.length - 1; i >= 0; i -= 1) {
+        bodies[i].update();
+        if(bodies[i].timer <= 0) {
+            stage.removeChild(bodies[i].entity);
+            bodies.splice(i, 1);
         }
     }
 
