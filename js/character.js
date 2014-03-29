@@ -27,17 +27,16 @@ function Character(speed, x, y, graphics, life, stopAtTarget) {
         var move = !self.stopAtTarget;
 
         for(var i = 0; walls.length > i; i++) {
-            if(walls[i].collision(self.entity.x, self.entity.y)) {
-                self.entity.x -= self.entity.vX;
-                self.entity.y -= self.entity.vY;
-                self.entity.rotation += Math.random() * self.rotateAmount * self.rotateDirection;
+            var noloop = 450;
+            while (walls[i].collision(self.entity.x + self.entity.vX * 1.1, self.entity.y + self.entity.vY * 1.1) && --noloop) {
+                self.entity.rotation += self.rotateDirection * 0.8;
                 var a = self.entity.rotation / 360.0 * Math.PI * 2;
                 self.entity.vX = Math.cos(a) * self.speed * dt;
                 self.entity.vY = Math.sin(a) * self.speed * dt;
-                if(!walls[i].collision(self.entity.x + self.entity.vX, self.entity.y + self.entity.vY)) {
-                    self.entity.x += self.entity.vX;
-                    self.entity.y += self.entity.vY;
-                }
+            }
+            if (noloop <= 0) {
+                self.entity.x -= self.entity.vX * 0.3;
+                self.entity.y -= self.entity.vY * 0.3;
                 return;
             }
         }

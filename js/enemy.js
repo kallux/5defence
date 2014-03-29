@@ -31,17 +31,28 @@ function Enemy(x, y, sensorRange, attackRange, attackStrength, life) {
             if(enemies[i] !== self) {
                 var d = self.character.distanceTo(enemies[i].character);
                 if(d < 8) {
-                    self.character.entity.x += Math.round((Math.random() * 8 - 4));
-                    self.character.entity.y += Math.round((Math.random() * 8 - 4));
+                    var newx = self.character.entity.x + Math.round((Math.random() * 8 - 4)),
+                        newy = self.character.entity.y + Math.round((Math.random() * 8 - 4)),
+                        collision = false;
+                    for (var j = 0; walls.length > j; j++) {
+                        if (walls[j].collision(newx, newy)) {
+                            collision = true;
+                            break;
+                        }
+                    }
+                    if (collision === false) {
+                        self.character.entity.x = newx;
+                        self.character.entity.y = newy;
+                    }
                     break;
                 }
             }
         }
 
-        if(self.target) {
+        if (self.target) {
             self.character.moveToPoint = self.target;
-            if(Math.round(self.character.entity.x) === Math.round(self.target.x) &&
-            Math.round(self.character.entity.y) === Math.round(self.target.y)) {
+            if (Math.round(self.character.entity.x) === Math.round(self.target.x) &&
+                Math.round(self.character.entity.y) === Math.round(self.target.y)) {
                 self.target = null;
                 self.character.moveToPoint = null;
             }
