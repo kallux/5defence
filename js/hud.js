@@ -1,7 +1,9 @@
 var money,
     buildMarineButton,
     buildMarineButtonRect,
-    moneyLabel;
+    moneyLabel,
+    buttonLabel
+    marineCost = 50;
 
 function setMoney(amount) {
     money = amount;
@@ -28,22 +30,27 @@ function initHud() {
     moneyLabel.x = canvas.width - 50;
     moneyLabel.y = 20;
 
+    buttonLabel = new Text("$" + marineCost, "bold 14px Arial", "#FFF");
+    buttonLabel.x = canvas.width - 50;
+    buttonLabel.y = canvas.height - 10;
+
     setMoney(0);
 
     var g = new Graphics();
-    g.beginFill("#00f");
-    g.rect(0,0,50,50);
+    g.beginFill("#9999FF");
+    g.rect(0,0,80,30);
     buildMarineButton = new Shape(g);
-    buildMarineButton.x = parseInt(canvas.width-25);
-    buildMarineButton.y = parseInt(canvas.height-25);
-    buildMarineButtonRect = new Rectangle(buildMarineButton.x, buildMarineButton.y, 50, 50)
+    buildMarineButton.x = parseInt(canvas.width-80);
+    buildMarineButton.y = parseInt(canvas.height-30);
+    buildMarineButtonRect = new Rectangle(buildMarineButton.x, buildMarineButton.y, 80, 30)
 
     stage.addChild(moneyLabel);
     stage.addChild(buildMarineButton);
+    stage.addChild(buttonLabel);
 
     buildMarineButton.onClick = function (event) {
         if(intersects(stage.mouseX, stage.mouseY, buildMarineButtonRect)) {
-            if(removeMoney(50)) {
+            if (removeMoney(marineCost)) {
                 addTowers(1);
             }
         }

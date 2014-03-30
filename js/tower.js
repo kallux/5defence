@@ -16,20 +16,20 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
             move = true;
 
         self.flareTime -= dt;
-        if(self.showFlare && self.flareTime <= 0) {
+        if (self.showFlare && self.flareTime <= 0) {
             stage.removeChild(self.flare);
             self.showFlare = false;
         }
 
-        if(self.character.life <= 0) {
+        if (self.character.life <= 0) {
             self.character.isDead = true;
             return;
         }
 
-        for(i = 0; i < towers.length; i += 1) {
-            if(towers[i] !== self) {
+        for (i = 0; i < towers.length; i += 1) {
+            if (towers[i] !== self) {
                 var d = self.character.distanceTo(towers[i].character);
-                if(d < 8) {
+                if (d < 8) {
                     self.character.entity.x += Math.round((Math.random() * 8 - 4));
                     self.character.entity.y += Math.round((Math.random() * 8 - 4));
                     break;
@@ -37,37 +37,40 @@ function Tower(x, y, sensorRange, attackRange, attackStrength, life) {
             }
         }
 
-        for(i = 0; i < enemies.length; i += 1) {
+        enemies = enemies.sort(function(a,b) {
+            return a.character.aggressors - b.character.aggressors;
+        });
+
+        for (i = 0; i < enemies.length; i += 1) {
             var d = self.character.distanceTo(enemies[i].character);
-            if(d <= self.sensorRange) {
-                if(d <= self.attackRange) {
-                    self.attack(enemies[i]);
-                    move = false;
-                    break;
-                }
+            if (d <= self.sensorRange && d <= self.attackRange) {
+                self.attack(enemies[i]);
                 break;
             }
         }
-        if(move) {
+        if (move) {
             this.character.update();
         }
     };
 
     self.attack = function (enemy) {
-        var a = self.character.entity.rotation / 360.0 * Math.PI * 2;
+        self.character.entity.rotation = Math.atan2(
+            enemy.character.entity.y - self.character.entity.y,
+            enemy.character.entity.x - self.character.entity.x) * 180.0 / Math.PI;
         self.flare.rotation = self.character.entity.rotation;
         self.flare.x = self.character.entity.x;
         self.flare.y = self.character.entity.y;
-        self.flare.x += Math.cos(a) * 12 * dt;
-        self.flare.y += Math.sin(a) * 12 * dt;
+        var a = self.character.entity.rotation / 360.0 * Math.PI * 2;
+        self.flare.x += Math.cos(a) * 12;
+        self.flare.y += Math.sin(a) * 12;
         self.flare.regX = 8;
         self.flare.regY = 8;
-        if(!self.showFlare && self.flareTime <= 0) {
+        if (!self.showFlare && self.flareTime <= 0) {
             stage.addChildAt(self.flare, stage.getNumChildren() - 1);
             self.showFlare = true;
             self.flareTime = 5;
         }
-        self.character.entity.rotation = Math.atan2(enemy.character.entity.y - self.character.entity.y, enemy.character.entity.x - self.character.entity.x) * 180.0 / Math.PI;
         enemy.character.life -= self.attackStrength * dt;
+        enemy.character.aggressors += 1;
     };
 }

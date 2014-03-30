@@ -2,7 +2,7 @@ function Body(x, y, rotation, graphics) {
     var self = this;
     
     self.entity = new Shape(graphics);
-    self.timer = Math.random() * 200 + 100;
+    self.timer = Math.random() * 500 + 500;
     self.entity.x = x;
     self.entity.y = y;
     self.entity.regX = 8;
